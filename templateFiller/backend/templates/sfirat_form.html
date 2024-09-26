@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css"> 
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
+    <title>ספירת מלאי</title>
+</head>
+<body>
+    <header>
+        <div class="top-bar">
+            <img src="/static/images/logo.png" alt="Company Logo" class="logo">
+        </div>
+    </header>
+
+    <div class="main-content">
+        <h1>ספירת מלאי</h1>
+        <form action="/sfirat_form" method="POST">
+            <div class="form-group">
+                <label for="date_1">מה תאריך המכתב?</label>
+                <input type="date" id="date_1" name="date_1" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="pakid_shuma">מי פקיד שומה?</label>
+                <select id="pakid_shuma" name="pakid_shuma" required>
+                    {% for assessor in assessors %}
+                        <option value="{{ assessor.value }}">{{ assessor.value }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="address_pkid_shuma">מה הכתובת של הפקיד שומה (לא חובה)?</label>
+                <input type="text" id="address_pkid_shuma" name="address_pkid_shuma" >
+            </div>
+            
+            <div class="form-group">
+                <label for="city">מה העיר של הפקיד שומה (לא חובה)?</label>
+                <input type="text" id="city" name="city" >
+            </div>
+            
+            <div class="form-group">
+                <label for="company_name">מה השם של החברה?</label>
+                <input type="text" id="company_name" name="company_name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="c_r_number">מה הח.פ. של החברה?</label>
+                <input type="text" id="c_r_number" name="c_r_number" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="year">ספירת מלאי של איזה שנה?</label>
+                <select id="year" name="year" required>
+                    {% for year in years %}
+                        <option value="{{ year }}">{{ year }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="date_2">מה תאריך של ספירת המלאי?</label>
+                <input type="date" id="date_2" name="date_2" required>
+            </div>
+           
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

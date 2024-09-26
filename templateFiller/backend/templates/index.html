@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>בחירת תבניות מסמכים</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script defer src="/static/utility.js"></script>
+</head>
+<body>
+
+    <header>
+        <div class="top-bar">
+            <img src="/static/images/logo.png" alt="Company Logo" class="logo">
+         </div>
+    </header>
+
+    <div class="main-content">
+        <h1>בחר את התבנית המבוקשת</h1>
+
+        <!-- Search Container -->
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="חפש תבנית..." onkeyup="utility.searchForms()" />
+        </div>
+
+        
+        <div class="image-container">
+            <div class="card">
+                <a href="/sfirat_form" data-form-name="ספירת מלאי">
+                    <img src="/static/images/sfirat.png" alt="ספירת מלאי" class="card-image">
+                    <p>ספירת מלאי</p>
+                </a>
+            </div>
+            <div class="card">
+                <a href="/bitul_knas_form" data-form-name="בקשה לביטול קנס">
+                    <img src="/static/images/cancel_fine.png" alt="בקשה לביטול קנס" class="card-image">
+                    <p>בקשה לביטול קנס</p>
+                </a>
+            </div>
+            <div class="card">
+                <a href="/hashmadat_melai_form" data-form-name="השמדת מלאי">
+                    <img src="/static/images/destroy_inventory.png" alt="השמדת מלאי" class="card-image">
+                    <p>השמדת מלאי</p>
+                </a>
+            </div>
+            <div class="card">
+                <a href="/takanot_dolariot_form" data-form-name="תקנות דולריות">
+                    <img src="/static/images/dollar_regulations.png" alt="תקנות דולריות" class="card-image">
+                    <p>תקנות דולריות</p>
+                </a>
+            </div>
+            <div class="card">
+                <a href="/104a_form" data-form-name="104A">
+                    <img src="/static/images/104a.png" alt="104A" class="card-image">
+                    <p>104A</p>
+                </a>
+            </div>
+            <div class="card">
+                <a href="/template_6" data-form-name="הודעה על רווח הון">
+                    <img src="/static/images/capital_gains.png" alt="הודעה על רווח הון" class="card-image">
+                    <p>הודעה על רווח הון</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

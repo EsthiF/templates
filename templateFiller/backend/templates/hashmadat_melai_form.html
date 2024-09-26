@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css"> 
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
+    <title>השמדת מלאי</title>
+</head>
+<body>
+    <header>
+        <div class="top-bar">
+            <img src="/static/images/logo.png" alt="Company Logo" class="logo">
+        </div>
+    </header>
+
+    <div class="main-content">
+        <h1>השמדת מלאי</h1>
+        <form action="/process_form" method="POST">
+            <input type="hidden" name="template_name" value="hashmadat_melai">
+              
+            <div class="form-group">
+                <label for="date_1">מה תאריך המכתב?</label>
+                <input type="date" id="date_1" name="date_1" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="pakid_shuma">מי פקיד שומה?</label>
+                <select id="pakid_shuma" name="pakid_shuma" required>
+                    {% for assessor in assessors %}
+                        <option value="{{ assessor.value }}">{{ assessor.value }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="address_pkid_shuma">מה הכתובת של הפקיד שומה (לא חובה)?</label>
+                <input type="text" id="address_pkid_shuma" name="address_pkid_shuma">
+            </div>
+            
+            <div class="form-group">
+                <label for="city">מה העיר של הפקיד שומה (לא חובה)?</label>
+                <input type="text" id="city" name="city">
+            </div>
+            
+            <div class="form-group">
+                <label for="company_name">מה השם של החברה?</label>
+                <input type="text" id="company_name" name="company_name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="c_r_number">מה הח.פ. של החברה?</label>
+                <input type="text" id="c_r_number" name="c_r_number" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="date_2">מה התאריך של השמדת מלאי?</label>
+                <input type="date" id="date_2" name="date_2" required>
+            </div>
+
+            <div class="form-group">
+                <label for="address">מה הכתובת של המחסן של החברה?</label>
+                <input type="text" id="address" name="address" required>
+            </div>
+
+            <div class="form-group">
+                <label for="total_amount">מה שווי המלאי המיועד להשמדה?</label>
+                <input type="text" id="total_amount" name="total_amount" placeholder="Enter amount" required>
+            </div>
+
+            <div class="form-group">
+                <label for="name">מה השם של נציג החברה?</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone_number">מה המספר טלפון של נציג החברה?</label>
+                <div style="display: flex; align-items: center;">
+                    <input list="country_codes" id="country_code" name="country_code" placeholder="+54" style="width: 80px;" required>
+                    <datalist id="country_codes">
+                        <option value="+50">
+                        <option value="+51">
+                        <option value="+52">
+                        <option value="+53">
+                        <option value="+54">
+                        <option value="+55">
+                        <option value="+57">
+                        <option value="+58">
+                        <option value="+59">
+                        <option value="+03"> 
+                        <option value="+02">  
+                    </datalist>
+                    <input type="text" id="phone_number" name="phone_number" placeholder="Enter your phone number" required pattern="\d{7,}" title="Phone number should be at least 7 digits long" style="margin-left: 10px; width: 150px;">
+                </div>
+            </div>
+            
+            <script>
+                document.getElementById('phone_number').addEventListener('input', function(e) {
+                    const phoneNumber = e.target.value;
+                    if (phoneNumber.length < 7) {
+                        e.target.setCustomValidity("Phone number must be at least 7 digits long.");
+                    } else {
+                        e.target.setCustomValidity(""); 
+                    }
+                });
+            </script>
+
+            <div class="form-group">
+                <label for="name_2">נציג קשר של EY</label>
+                <input type="text" id="name_2" name="name_2" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">מייל של נציג EY</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

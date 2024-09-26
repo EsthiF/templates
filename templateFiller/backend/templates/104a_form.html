@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
+    <script defer src="/static/utility.js"></script>
+    <title>104א&#39;</title>
+</head>
+<body>
+    <header>
+        <div class="top-bar">
+            <img src="/static/images/logo.png" alt="Company Logo" class="logo">
+        </div>
+    </header>
+
+    <div class="main-content">
+        <h1>104א&#39</h1>
+        <form id="multiStepForm" action="/process_form" method="POST" onsubmit="return calculateSums()">
+            
+            <input type="hidden" id="sum_1" name="sum_1">
+            <input type="hidden" id="sum_2" name="sum_2">
+            <input type="hidden" id="sum_3" name="sum_3">
+            <input type="hidden" name="template_name" value="104a">
+
+            <!-- First Form Step -->
+            <div class="form-step">
+                <div class="form-group">
+                    <label for="date_1">מה תאריך המכתב?</label>
+                    <input type="date" id="date_1" name="date_1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="pakid_shuma">מי פקיד שומה?</label>
+                    <select id="pakid_shuma" name="pakid_shuma" required>
+                        {% for assessor in assessors %}
+                            <option value="{{ assessor.value }}">{{ assessor.value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="address_pkid_shuma">מה הכתובת של הפקיד שומה (לא חובה)?</label>
+                    <input type="text" id="address_pkid_shuma" name="address_pkid_shuma">
+                </div>
+                
+                <div class="form-group">
+                    <label for="city">מה העיר של הפקיד שומה (לא חובה)?</label>
+                    <input type="text" id="city" name="city">
+                </div>
+
+                <!-- Only Next Button -->
+                <button type="button" class="next-btn" onclick="nextStep()">Next</button>
+            </div>
+
+            <!-- Second Form Step -->
+            <div class="form-step" style="display:none;">
+                <h2> פרטי חברת המעבירה</h2>
+                <div class="form-group">
+                    <label for="company_name"> השם של החברה המעבירה?</label>
+                    <input type="text" id="company_name" name="company_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="c_r_number"> הח.פ. של החברה המעבירה?</label>
+                    <input type="text" id="c_r_number" name="c_r_number" required>
+                </div>
+                <div class="form-group">
+                    <label for="address"> כתובת של החברה המעבירה?</label>
+                    <input type="text" id="address" name="address" required>
+                </div>
+               
+                <div class="form-group">
+                    <label for="date_2"> תאריך של יום החתימה?</label>
+                    <input type="date" id="date_2" name="date_2" required>
+                </div>
+                <div class="form-group">
+                    <label for="amount">סכום מס רכישה ?</label>
+                    <input type="number" id="amount" name="amount" required>
+                </div>
+
+                <button type="button" class="next-btn" onclick="nextStep()">Next</button>
+                <button type="button" class="prev-btn" onclick="prevStep()">Previous</button>
+            </div>
+
+            <!-- Third Form Step -->
+            <div class="form-step" style="display:none;">
+                <h2> פרטי החברה הקולטת והחברה המעוברת</h2>
+                
+                <div class="form-group">
+                    <label for="company_name_1"> השם של החברה הקולטת?</label>
+                    <input type="text" id="company_name_1" name="company_name_1" required>
+                </div>
+                <div class="form-group">
+                    <label for="c_r_number_1"> הח.פ. של החברה הקולטת?</label>
+                    <input type="text" id="c_r_number_1" name="c_r_number_1" required>
+                </div>
+                <div class="form-group">
+                    <label for="date_5"> תאריך ייסודה?</label>
+                    <input type="date" id="date_5" name="date_5" required>
+                </div>
+                <div class="form-group">
+                    <label for="pakid_shuma_1">מי פקיד השומה?</label>
+                    <select id="pakid_shuma_1" name="pakid_shuma_1" required>
+                        {% for assessor in assessors %}
+                            <option value="{{ assessor.value }}">{{ assessor.value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="value">מה שווי השוק ?</label>
+                    <input type="number" id="value" name="value" required>
+                </div>
+                <div class="form-group">
+                    <label for="company_name_2"> השם של החברה המועברת?</label>
+                    <input type="text" id="company_name_2" name="company_name_2" required>
+                </div>
+                <div class="form-group">
+                    <label for="c_r_number_2"> הח.פ. של החברה המועברת?</label>
+                    <input type="text" id="c_r_number_2" name="c_r_number_2" required>
+                </div>
+
+                <!-- Next and Previous Buttons -->
+                <button type="button" class="next-btn" onclick="nextStep()">Next</button>
+                <button type="button" class="prev-btn" onclick="prevStep()">Previous</button>
+            </div>
+
+            <!-- Fourth Form Step (Asset Details) -->
+            <div class="form-step" style="display:none;">
+                <h2>פרטי הנכס</h2>
+                <div class="asset-item"></div>
+                <div class="form-group">
+                    <label for="asset_1">מה תיאור הנכס?</label>
+                    <input type="text" id="asset_1" name="asset_1" required>
+                </div>
+                <div class="form-group">
+                    <label for="date_3"> תאריך רכישת הנכס?</label>
+                    <input type="date" id="date_3" name="date_3" required>
+                </div>
+                <div class="form-group">
+                    <label for="n_amount">מחיר מקורי של הנכס?</label>
+                    <input type="number" id="n_amount" name="n_amount" required>
+                </div>
+                <div class="form-group">
+                    <label for="m_amount">יתרת מחיר מקורי של הנכס?</label>
+                    <input type="number" id="m_amount" name="m_amount" oninput="calculateSums()" required>
+                </div>
+                <div class="form-group">
+                    <label for="l_amount">שווי שוק ביום העברה?</label>
+                    <input type="number" id="l_amount" name="l_amount" oninput="calculateSums()" required>
+                </div>
+
+                <button type="button" class="add-more-btn" onclick="addAsset()">הוסף נכס נוסף +</button>
+                <button type="button" class="next-btn" onclick="nextStep()">Next</button>
+                <button type="button" class="prev-btn" onclick="prevStep()">Previous</button>
+            </div>
+
+            <!-- Fifth Form Step (Final Details) -->
+            <div class="form-step" style="display:none;">
+                <div class="form-group">
+                    <label for="total_amount">מספר המניות המוקצות?</label>
+                    <input type="text" id="total_amount" name="total_amount" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="name"> שם של הרו"ח לפרטים נוספים?</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone_number">מה המספר טלפון של הרו"ח ?</label>
+                    <div style="display: flex; align-items: center;">
+                        <input list="country_codes" id="country_code" name="country_code" placeholder="+54" style="width: 80px;" required>
+                        <datalist id="country_codes">
+                            <option value="+50">
+                            <option value="+51">
+                            <option value="+52">
+                            <option value="+53">
+                            <option value="+54">
+                            <option value="+55">
+                            <option value="+57">
+                            <option value="+58">
+                            <option value="+59">
+                            <option value="+03"> 
+                            <option value="+02">  
+                        </datalist>
+                        <input type="text" id="phone_number" name="phone_number" placeholder="Enter your phone number" required pattern="\d{7,}" title="Phone number should be at least 7 digits long" style="margin-left: 10px; width: 150px;">
+                    </div>
+                </div>
+
+                <!-- Previous Button and Submit -->
+                <button type="button" class="prev-btn" onclick="prevStep()">Previous</button>
+                <button type="submit" class="submit-btn">Submit</button>
+            </div>
+
+        </form>
+    </div>
+
+    <script>
+        let currentStep = 0;
+        const formSteps = document.querySelectorAll(".form-step");
+
+        function showStep(step) {
+            formSteps.forEach((formStep, index) => {
+                formStep.style.display = (index === step) ? "block" : "none";
+            });
+        }
+
+        function nextStep() {
+            if (currentStep < formSteps.length - 1) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+
+        let assetAdded = false; // Flag to ensure asset is only added once
+
+        function addAsset() {
+            if (!assetAdded) { // Check if the asset has already been added
+                const assetContainer = document.querySelector(".asset-item");
+
+                const newAssetHTML = `
+                    <div class="form-group">
+                        <label for="asset_2">מה תיאור הנכס?</label>
+                        <input type="text" id="asset_2" name="asset_2" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="date_4"> תאריך רכישת הנכס?</label>
+                        <input type="date" id="date_4" name="date_4" >
+                    </div>
+                    <div class="form-group">
+                        <label for="n_amount_1">מחיר מקורי של הנכס?</label>
+                        <input type="number" id="n_amount_1" name="n_amount_1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="m_amount_1">יתרת מחיר מקורי של הנכס?</label>
+                        <input type="number" id="m_amount_1" name="m_amount_1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="l_amount_1">שווי שוק ביום העברה?</label>
+                        <input type="number" id="l_amount_1" name="l_amount_1" required>
+                    </div>
+                `;
+
+                assetContainer.insertAdjacentHTML("beforeend", newAssetHTML);
+                assetAdded = true; // Set flag to true after asset is added
+            }
+        }
+
+        function calculateSums() {
+            const sum_1 = utility.sumFields(['m_amount', 'm_amount_1']);
+            document.getElementById('sum_1').value = sum_1;
+
+            const sum_2 = utility.sumFields(['l_amount', 'l_amount_1']);
+            document.getElementById('sum_2').value = sum_2;
+
+            // Ensure the form submits after the sums are calculated
+            return true;
+        }
+
+        // Initialize first step
+        showStep(currentStep);
+    </script>
+
+</body>
+</html>
